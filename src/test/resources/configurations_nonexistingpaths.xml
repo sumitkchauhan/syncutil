@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<su:configurations xmlns:su="http://www.example.org/configurations/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/configurations/ ../../main/resources/configurations.xsd ">
+	<configuration>
+		<sourceDirectory>/dummy</sourceDirectory>
+		<destinationDirectory>/dummy</destinationDirectory>
+	</configuration>
+</su:configurations>

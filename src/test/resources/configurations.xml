@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<su:configurations xmlns:su="http://www.example.org/configurations/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/configurations/ ../../main/resources/configurations.xsd ">
+	<configuration>
+		<sourceDirectory>/sourceDirectory</sourceDirectory>
+		<destinationDirectory>/destinationDirectory</destinationDirectory>
+	</configuration>
+	<configuration>
+		<sourceDirectory>/sourceDirectory</sourceDirectory>
+		<destinationDirectory>/destinationDirectory</destinationDirectory>
+	</configuration>
+	<configuration>
+		<sourceDirectory>/sourceDirectory\abc</sourceDirectory>
+		<destinationDirectory>/destinationDirectory/abc</destinationDirectory>
+	</configuration>
+	<configuration>
+		<sourceDirectory>/sourceDirectory</sourceDirectory>
+		<destinationDirectory>/destinationDirectory1</destinationDirectory>
+	</configuration>
+</su:configurations>

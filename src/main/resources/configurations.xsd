@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/configurations/" targetNamespace="http://www.example.org/configurations/">
+    <element name="configurations">
+    	<complexType>
+    		<sequence>
+    			<element name="configuration" maxOccurs="unbounded"
+    				minOccurs="0">
+    				<complexType>
+    					<sequence>
+    						<element name="destinationType"
+    							type="string" maxOccurs="1" minOccurs="0">
+    						</element>
+    						<element name="copyObserver" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+    						<element name="sourceDirectory"
+    							type="string">
+    						</element>
+    						<element name="destinationDirectory"
+    							type="string">
+    						</element>
+    					</sequence>
+    				</complexType>
+    			</element>
+    		</sequence>
+    	</complexType>
+    </element>
+    
+</schema>
