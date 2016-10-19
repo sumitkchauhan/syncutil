@@ -42,8 +42,8 @@ public class Configurations {
 					.unmarshal(configFileStrm);
 			normalizeAndStoreConfiguration(loadedConfigs);
 		} catch (JAXBException e) {
-			LOGGER.error("Exception while parsing Configuration XML file.");
-			throw new ConfigurationException("Exception while parsing Configuration XML file.");
+			LOGGER.error("Exception while parsing Configuration XML file.",e);
+			throw new ConfigurationException("Exception while parsing Configuration XML file.",e);
 		}
 	}
 
@@ -51,8 +51,8 @@ public class Configurations {
 		try (InputStream is = Configurations.class.getResourceAsStream(configFileClasspath)) {
 			return new Configurations(is);
 		} catch (IOException e) {
-			LOGGER.error("Exception while readin config file.");
-			throw new ConfigurationException("Exception while readin config file.");
+			LOGGER.error("Exception while readin config file.",e);
+			throw new ConfigurationException("Exception while readin config file.",e);
 		}
 	}
 
@@ -60,8 +60,8 @@ public class Configurations {
 		try (InputStream is = new FileInputStream(fsPath)) {
 			return new Configurations(is);
 		} catch (IOException e) {
-			LOGGER.error("Exception while readin config file.");
-			throw new ConfigurationException("Exception while readin config file.");
+			LOGGER.error("Exception while readin config file.",e);
+			throw new ConfigurationException("Exception while readin config file.",e);
 		}
 	}
 

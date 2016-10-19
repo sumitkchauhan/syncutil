@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import per.sumit.syncUtil.exceptions.SyncException;
+
 /**
  * Facade for copying
  * 
@@ -31,13 +33,13 @@ public final class LocationBasedCopier {
 	 */
 	public void copy() {
 		String sourceDirectory;
-		String destinationDirectory = null;
-		String destinationDirectoryType = null;
+		String destinationDirectory;
+		String destinationDirectoryType;
 		for (Configuration configuration : copyConfiguration.getNormalizedConfiguration()) {
 			sourceDirectory = configuration.getSourceDirectory();
 			destinationDirectory = configuration.getDestinationDirectory();
 			destinationDirectoryType = configuration.getDestinationDirectoryType();
-			if ((null != destinationDirectoryType) && destinationDirectoryType.equals("mtp")
+			if ((null != destinationDirectoryType) && "mtp".equals(destinationDirectoryType)
 					&& locationChecker.locationExists(sourceDirectory)) {
 				// TODO:check destination directory existence for MTP too
 				configuration.notifyPreActivation();
@@ -62,8 +64,9 @@ public final class LocationBasedCopier {
 			// manage
 			// copier lifeyecle
 			copier.close();
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.warn("Exception while closing the resource", e);
 		}
 	}
 

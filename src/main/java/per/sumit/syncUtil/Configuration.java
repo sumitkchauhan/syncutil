@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -82,7 +81,7 @@ public final class Configuration {
 	@Override
 	public boolean equals(Object obj) {
 		boolean isEqual = false;
-		if (obj.getClass().equals(Configuration.class)) {
+		if ((obj!=null) && obj.getClass().equals(Configuration.class)) {
 			Configuration that = (Configuration) obj;
 			isEqual = Paths.get(that.getSourceDirectory()).equals(Paths.get(this.getSourceDirectory()))
 					&& Paths.get(that.getDestinationDirectory()).equals(Paths.get(this.getDestinationDirectory()));

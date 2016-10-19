@@ -48,8 +48,8 @@ public final class PlaylistObserver implements CopyObserver {
 		try {
 			updateFiles(Paths.get(sourceDirectory));
 		} catch (IOException e) {
-			LGGR.error("Exception while updating playlist.");
-			throw new SyncException("Exception while updating playlist.");
+			LGGR.error("Exception while updating playlist.",e);
+			throw new SyncException("Exception while updating playlist.",e);
 		}
 	}
 

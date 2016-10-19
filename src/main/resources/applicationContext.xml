@@ -26,7 +26,7 @@
 
 	<task:scheduled-tasks>
 		<task:scheduled ref="locationBasedCopier" method="copy"
-			fixed-delay="1800000"></task:scheduled>
+			fixed-delay="3600000"></task:scheduled>
 	</task:scheduled-tasks>
 	<bean id="configurations" class="per.sumit.syncUtil.Configurations"
 		factory-method="getConfigurationFromFileSystem">
