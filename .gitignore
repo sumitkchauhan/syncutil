@@ -2,4 +2,5 @@ target
 .project
 .classpath
 all.log
+.settings
 dependency-reduced-pom.xml
