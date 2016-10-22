@@ -35,6 +35,7 @@ public final class LocationBasedCopier {
 		String sourceDirectory;
 		String destinationDirectory;
 		String destinationDirectoryType;
+		LOGGER.info("Starting copying process.");
 		for (Configuration configuration : copyConfiguration.getNormalizedConfiguration()) {
 			sourceDirectory = configuration.getSourceDirectory();
 			destinationDirectory = configuration.getDestinationDirectory();
