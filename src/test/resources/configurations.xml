@@ -3,18 +3,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.example.org/configurations/ ../../main/resources/configurations.xsd ">
 	<configuration>
+		<schedule-fixed-delay>100</schedule-fixed-delay>
 		<sourceDirectory>/sourceDirectory</sourceDirectory>
 		<destinationDirectory>/destinationDirectory</destinationDirectory>
 	</configuration>
 	<configuration>
+		<schedule-fixed-delay>100</schedule-fixed-delay>
 		<sourceDirectory>/sourceDirectory</sourceDirectory>
 		<destinationDirectory>/destinationDirectory</destinationDirectory>
 	</configuration>
 	<configuration>
+		<schedule-fixed-delay>100</schedule-fixed-delay>
 		<sourceDirectory>/sourceDirectory\abc</sourceDirectory>
 		<destinationDirectory>/destinationDirectory/abc</destinationDirectory>
 	</configuration>
 	<configuration>
+		<schedule-fixed-delay>100</schedule-fixed-delay>
 		<sourceDirectory>/sourceDirectory</sourceDirectory>
 		<destinationDirectory>/destinationDirectory1</destinationDirectory>
 	</configuration>

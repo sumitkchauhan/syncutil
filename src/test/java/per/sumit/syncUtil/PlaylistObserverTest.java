@@ -46,7 +46,7 @@ public class PlaylistObserverTest {
 
 		PlaylistObserver playlistObserver = new PlaylistObserver(fileIO);
 		List<CopyObserver> obsList = new ArrayList<>();
-		Configuration copyConfiguration = new Configuration(sourceDirectory, destDirectory, null, obsList);
+		Configuration copyConfiguration = new Configuration(sourceDirectory, destDirectory, null, obsList,200);
 
 		replay(fileIO);
 		playlistObserver.notifyPreCopy(copyConfiguration);

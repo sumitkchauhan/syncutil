@@ -15,19 +15,20 @@
 
 
 	<bean id="locationChecker" class="per.sumit.syncUtil.LocationChecker" />
-	<bean id="fileCopier" class="per.sumit.syncUtil.RSyncFileCopier">
-		<constructor-arg value="2" />
+	<bean id="fileCopier" class="per.sumit.syncUtil.RSyncFileCopier"/>
+	<bean id="scheduler" class="per.sumit.syncUtil.scheduling.SchedulerImpl">
+		<constructor-arg value="3"/>
+	</bean>
+	<bean id="copyCmdFactory" class="per.sumit.syncUtil.scheduling.CopyCommandFactoryImpl">
+		<constructor-arg ref="locationChecker"/>
+		<constructor-arg ref="fileCopier"/>
 	</bean>
 	<bean id="locationBasedCopier" class="per.sumit.syncUtil.LocationBasedCopier">
-		<constructor-arg ref="locationChecker" />
-		<constructor-arg ref="fileCopier" />
-		<constructor-arg ref="configurations"/>
+		<constructor-arg ref="copyCmdFactory" />
+		<constructor-arg ref="configurations" />
+		<constructor-arg ref="scheduler"/>
 	</bean>
 
-	<task:scheduled-tasks>
-		<task:scheduled ref="locationBasedCopier" method="copy"
-			fixed-delay="3600000"></task:scheduled>
-	</task:scheduled-tasks>
 	<bean id="configurations" class="per.sumit.syncUtil.Configurations"
 		factory-method="getConfigurationFromFileSystem">
 		<constructor-arg value="/home/samurai/Replicate/Programs/myScripts/configurations.xml" />

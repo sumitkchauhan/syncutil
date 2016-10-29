@@ -23,19 +23,25 @@ public final class Configuration {
 	private static final Pattern SPURIOUS_SEP_PTTRN = Pattern.compile("[\\\\/](?=[^\\s])");
 	private static final String SEPARATOR = File.separator;
 
-	private List<CopyObserver> observerList  = new ArrayList<>();
+	private List<CopyObserver> observerList = new ArrayList<>();
 	private final String sourceDirectory;
 	private final String destinationDirectory;
 	private final String destinationDirectoryType;
+	/**
+	 * Delay for this configuration to be executed
+	 */
+	private final long scheduleFixedDelay;
 
-	public Configuration(String sourceDirectory, String destinationDirectory, String destinationDirectoryType) {
-		this(sourceDirectory, destinationDirectory, destinationDirectoryType, null);
+	public Configuration(String sourceDirectory, String destinationDirectory, String destinationDirectoryType,
+			long scheduleFixedDelay) {
+		this(sourceDirectory, destinationDirectory, destinationDirectoryType, null, scheduleFixedDelay);
 	}
 
 	public Configuration(String sourceDirectory, String destinationDirectory, String destinationDirectoryType,
-			List<CopyObserver> observerList) {
+			List<CopyObserver> observerList, long scheduleFixedDelay) {
 		this.sourceDirectory = sanitizePath(sourceDirectory);
 		this.destinationDirectory = sanitizePath(destinationDirectory);
+		this.scheduleFixedDelay = scheduleFixedDelay;
 		this.destinationDirectoryType = destinationDirectoryType;
 		if (CollectionUtils.isNotEmpty(observerList)) {
 			observerList.forEach(this.observerList::add);
@@ -67,21 +73,26 @@ public final class Configuration {
 		return destinationDirectoryType;
 	}
 
-	public void notifyPreActivation(){
-		for(CopyObserver obs:observerList){
+	public void notifyPreActivation() {
+		for (CopyObserver obs : observerList) {
 			obs.notifyPreCopy(this);
 		}
 	}
-	public void notifyPostFinishing(){
-		for(CopyObserver obs:observerList){
+
+	public void notifyPostFinishing() {
+		for (CopyObserver obs : observerList) {
 			obs.notifyPostCopy(this);
 		}
+	}
+
+	public long getScheduleFixedDelay() {
+		return scheduleFixedDelay;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		boolean isEqual = false;
-		if ((obj!=null) && obj.getClass().equals(Configuration.class)) {
+		if ((obj != null) && obj.getClass().equals(Configuration.class)) {
 			Configuration that = (Configuration) obj;
 			isEqual = Paths.get(that.getSourceDirectory()).equals(Paths.get(this.getSourceDirectory()))
 					&& Paths.get(that.getDestinationDirectory()).equals(Paths.get(this.getDestinationDirectory()));

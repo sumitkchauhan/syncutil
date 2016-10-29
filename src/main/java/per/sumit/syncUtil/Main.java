@@ -7,6 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		ClassPathXmlApplicationContext appCtx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		LocationBasedCopier locBaseCopier = (LocationBasedCopier) appCtx.getBean("locationBasedCopier");
+		locBaseCopier.copy();
 	}
 
 }

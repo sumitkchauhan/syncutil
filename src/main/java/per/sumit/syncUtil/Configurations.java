@@ -1,5 +1,6 @@
 package per.sumit.syncUtil;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,12 +12,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import per.sumit.syncUtil.exceptions.ConfigurationException;
 import per.sumit.syncUtil.observe.ObserverFactory;
@@ -38,12 +46,14 @@ public class Configurations {
 		try {
 			jaxbContext = JAXBContext.newInstance(per.sumit.syncUtil.model.Configurations.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			unmarshaller.setSchema(SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
+					.newSchema(new StreamSource(Configurations.class.getResourceAsStream("/configurations.xsd"))));
 			per.sumit.syncUtil.model.Configurations loadedConfigs = (per.sumit.syncUtil.model.Configurations) unmarshaller
 					.unmarshal(configFileStrm);
 			normalizeAndStoreConfiguration(loadedConfigs);
-		} catch (JAXBException e) {
-			LOGGER.error("Exception while parsing Configuration XML file.",e);
-			throw new ConfigurationException("Exception while parsing Configuration XML file.",e);
+		} catch (JAXBException | SAXException e) {
+			LOGGER.error("Exception while parsing Configuration XML file.", e);
+			throw new ConfigurationException("Exception while parsing Configuration XML file.", e);
 		}
 	}
 
@@ -51,8 +61,8 @@ public class Configurations {
 		try (InputStream is = Configurations.class.getResourceAsStream(configFileClasspath)) {
 			return new Configurations(is);
 		} catch (IOException e) {
-			LOGGER.error("Exception while readin config file.",e);
-			throw new ConfigurationException("Exception while readin config file.",e);
+			LOGGER.error("Exception while readin config file.", e);
+			throw new ConfigurationException("Exception while readin config file.", e);
 		}
 	}
 
@@ -60,8 +70,8 @@ public class Configurations {
 		try (InputStream is = new FileInputStream(fsPath)) {
 			return new Configurations(is);
 		} catch (IOException e) {
-			LOGGER.error("Exception while readin config file.",e);
-			throw new ConfigurationException("Exception while readin config file.",e);
+			LOGGER.error("Exception while readin config file.", e);
+			throw new ConfigurationException("Exception while readin config file.", e);
 		}
 	}
 
@@ -77,9 +87,11 @@ public class Configurations {
 		Set<Configuration> configToRemove = new HashSet<>();
 		final Set<Configuration> tempConfiguration = new HashSet<>();
 		for (per.sumit.syncUtil.model.Configurations.Configuration config : loadedConfig) {
-			tempConfiguration.add(new Configuration(config.getSourceDirectory(), config.getDestinationDirectory(),
-					config.getDestinationType(),
-					config.getCopyObserver().stream().map(obsFactory::getObserverforKey).collect(Collectors.toList())));
+			tempConfiguration
+					.add(new Configuration(config.getSourceDirectory(), config.getDestinationDirectory(),
+							config.getDestinationType(), config.getCopyObserver().stream()
+									.map(obsFactory::getObserverforKey).collect(Collectors.toList()),
+							config.getScheduleFixedDelay()));
 		}
 		for (Configuration currentConfig : tempConfiguration) {
 			for (Configuration tempConfig : tempConfiguration) {

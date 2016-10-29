@@ -2,7 +2,8 @@
 <su:configurations xmlns:su="http://www.example.org/configurations/"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.example.org/configurations/ ../../main/resources/configurations.xsd ">
-	<configuration>
+	<configuration>	
+		<schedule-fixed-delay>500</schedule-fixed-delay>
 		<sourceDirectory>/dummy</sourceDirectory>
 		<destinationDirectory>/dummy</destinationDirectory>
 	</configuration>
