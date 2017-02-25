@@ -17,6 +17,7 @@ public final class LocationBasedCopier {
 	private final Scheduler scheduler;
 	private final Logger LOGGER = LogManager.getLogger(LocationBasedCopier.class);
 	private final Configurations copyConfiguration;
+	private static final Long FIXED_CHECK_INTERVAL = 120000L;//ms
 
 	public LocationBasedCopier(CopyCommandFactory commandFact, Configurations copyConfiguration, Scheduler scheduler) {
 		this.commandFactory = commandFact;
@@ -33,7 +34,7 @@ public final class LocationBasedCopier {
 		LOGGER.info("Starting copying process.");
 		for (Configuration configuration : copyConfiguration.getNormalizedConfiguration()) {
 			scheduler.scheduleExecution(commandFactory.createCopyCommandForConfig(configuration),
-					configuration.getScheduleFixedDelay());
+					FIXED_CHECK_INTERVAL);
 		}
 
 	}

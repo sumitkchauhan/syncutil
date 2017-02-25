@@ -20,6 +20,12 @@ public class CopyCommand implements Command {
 	}
 
 	public void execute() {
+		long timeSinceLastExe = ExecutionRegistry.getTimeSinceLastExecution(copyConfiguration);
+		if (timeSinceLastExe < copyConfiguration.getScheduleFixedDelay()) {
+			LOGGER.info("Not sufficient delay for Config:" + copyConfiguration);
+			return;
+		}
+		LOGGER.info("Copying");
 		String sourceDirectory = copyConfiguration.getSourceDirectory();
 		String destinationDirectory = copyConfiguration.getDestinationDirectory();
 		String destinationDirectoryType = copyConfiguration.getDestinationDirectoryType();
@@ -29,6 +35,7 @@ public class CopyCommand implements Command {
 			copyConfiguration.notifyPreActivation();
 			copier.copy(sourceDirectory, destinationDirectory, copyConfiguration.getDestinationDirectoryType());
 			copyConfiguration.notifyPostFinishing();
+			ExecutionRegistry.registerSuccessfulConfigExecution(copyConfiguration);
 
 		} else {
 			if (locationChecker.locationExists(sourceDirectory)
@@ -36,11 +43,13 @@ public class CopyCommand implements Command {
 				copyConfiguration.notifyPreActivation();
 				copier.copy(sourceDirectory, destinationDirectory, copyConfiguration.getDestinationDirectoryType());
 				copyConfiguration.notifyPostFinishing();
+				ExecutionRegistry.registerSuccessfulConfigExecution(copyConfiguration);
 
 			} else {
 				LOGGER.warn("One of these directories don't exist:" + sourceDirectory + " OR " + destinationDirectory);
 			}
 		}
+		
 	}
 
 }
